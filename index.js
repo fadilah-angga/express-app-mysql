@@ -38,4 +38,32 @@ app.get('/karyawan', (req, res) => {
     })
 })
 
+app.post('/karyawan', (req, res) => {
+    let { name, email, no_hp } = req.body
+    let insertQuery = `INSERT INTO karyawan VALUES (null, ${db.escape(name)}, ${db.escape(email)}, ${db.escape(no_hp)})`
+
+    db.query(insertQuery, (err, results) => {
+        if (err) res.status(500).send(err)
+        
+        db.query(`SELECT * FROM karyawan WHERE name = ${db.escape(name)};`, (err2, results2) => {
+            if (err2) res.status(500).send(err2)
+            res.status(200).send({ message: "Berhasil menambahkan data baru", data: results2 })
+        })
+    })
+})
+
+app.delete('/karyawan', (req, res) => {
+    let id = req.query.id
+    let deleteQuery = `DELETE FROM karyawan WHERE id = ${id}`
+    let responseMessage = `{
+            "status_code" : 200,
+            "message" : "berhasil menghapus data"
+        }`
+
+    db.query(deleteQuery, (err, results) => {
+        if (err) console.error(`error : ${err.message}`)
+        res.status(200).send(JSON.parse(responseMessage))
+    })
+})
+
 app.listen(PORT, () => console.log('listening on port', PORT))
