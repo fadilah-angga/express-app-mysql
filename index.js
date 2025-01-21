@@ -1,11 +1,13 @@
 const express = require('express')
 const cors = require('cors')
 const mysql = require('mysql')
+const bearerToken = require('express-bearer-token')
 const PORT = 3300
 const app = express()
 
 app.use(cors())
 app.use(express.json())
+app.use(bearerToken())
 
 const db = mysql.createConnection({
     host: 'localhost',
