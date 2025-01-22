@@ -1,1 +1,1 @@
-jsonwebtoken nodemailer express-bearer-token
+jsonwebtoken nodemailer express-bearer-token multer

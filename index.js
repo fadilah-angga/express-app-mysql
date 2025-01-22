@@ -4,6 +4,7 @@ const db = require('./db/db')
 const bearerToken = require('express-bearer-token')
 const PORT = 3300
 const app = express()
+const { karyawanRouter, uploadRouter } = require('./router')
 
 app.use(cors())
 app.use(express.json())
@@ -16,8 +17,8 @@ db.connect((err) => {
     console.log(`connection to database successfully`) 
 })
 
-const router = require('./router')
 
-app.use('/api', router.karyawanRouter)
+app.use('/api', karyawanRouter)
+app.use('/album', uploadRouter)
 
 app.listen(PORT, () => console.log('listening on port', PORT))
